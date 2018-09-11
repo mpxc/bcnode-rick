@@ -64,11 +64,23 @@ const logger = getLogger(__filename);
 
 function isValidBlock(newBlock, type = 0) {
   if (newBlock === undefined) {
+    this._logger.warn('candidate block is undefined');
     return false;
   }
+  if (newBlock.getBlockchainHeaders === undefined) {
+    logger.warn('candidate block has incomplete child headers references');
+    //return false
+  }
+  let height = newBlock.getBlockchainHeaders().getBtcList()[0].getHeight();
+  if (height > 544000) {
+    console.log('rejecting shitty btc block with height=' + height);
+    return false;
+  }
+  // blocks may pass before the soft opening limit of 151500 blocks
   if (new BN(newBlock.getHeight()).lt(new BN(151500)) === true) {
     return true;
   }
+  logger.info('determining block validity');
   // if (!theBlockChainFingerPrintMatchGenesisBlock(newBlock)) {
   //  logger.warn('failed: theBlockChainFingerPrintMatchGenesisBlock')
   //  return false
@@ -174,7 +186,7 @@ async function isValidBlockCached(persistence, newBlock, type = 0) {
 
 function getNewestHeader(newBlock) {
   logger.info('getting block height ' + newBlock.getHeight());
-  if (newBlock === undefined) {
+  if (newBlock === undefined || newBlock.getBlockchainHeaders === undefined) {
     logger.warn('failed: isValidChildAge new block could not be found');
     return false;
   }
