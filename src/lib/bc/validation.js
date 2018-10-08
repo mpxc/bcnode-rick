@@ -71,9 +71,14 @@ function isValidBlock(newBlock, type = 0) {
     logger.warn('candidate block has incomplete child headers references');
     //return false
   }
-  let height = newBlock.getBlockchainHeaders().getBtcList()[0].getHeight();
-  if (height > 544000) {
-    console.log('rejecting shitty btc block with height=' + height);
+  let btcHeight = newBlock.getBlockchainHeaders().getBtcList()[0].getHeight();
+  if (btcHeight > 547000) {
+    logger.warn('rejecting shitty btc block with height=' + btcHeight);
+    return false;
+  }
+  let ethHeight = newBlock.getBlockchainHeaders().getEthList()[0].getHeight();
+  if (ethHeight > 6560000) {
+    logger.warn('rejecting shitty eth block with height=' + ethHeight);
     return false;
   }
   // blocks may pass before the soft opening limit of 151500 blocks
