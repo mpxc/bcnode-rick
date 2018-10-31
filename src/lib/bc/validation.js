@@ -72,12 +72,16 @@ function isValidBlock(newBlock, type = 0) {
     //return false
   }
   let btcHeight = newBlock.getBlockchainHeaders().getBtcList()[0].getHeight();
-  if (btcHeight > 553300) {
+  let btcCountHeight = Math.floor(Math.abs(Date.now() - Date.parse("31 Oct 2018 15:43:21 GMT+1")) / 36e5);
+  let btcApproxHeight = 548140 + (btcCountHeight * 7) + 7;
+  if (btcHeight > btcApproxHeight) {
     logger.warn('rejecting shitty btc block with height=' + btcHeight);
     return false;
   }
   let ethHeight = newBlock.getBlockchainHeaders().getEthList()[0].getHeight();
-  if (ethHeight > 6789430) {
+  let ethCountHeight = Math.floor(Math.abs(Date.now() - Date.parse("31 Oct 2018 15:45:56 GMT+1")) / 36e5);
+  let ethApproxHeight = 6618108 + (ethCountHeight * 252) + 252;
+  if (ethHeight > ethApproxHeight) {
     logger.warn('rejecting shitty eth block with height=' + ethHeight);
     return false;
   }
