@@ -575,16 +575,16 @@ class Multiverse {
 
       let btcHeight = block.getBlockchainHeaders().getBtcList()[0].getHeight();
       let btcCountHeight = Math.floor(Math.abs(Date.now() - Date.parse("31 Oct 2018 15:43:21 GMT+1")) / 36e5);
-      let btcApproxHeight = 548140 + (btcCountHeight * 7) + 7;
+      let btcApproxHeight = 548140 + (btcCountHeight * 7) + (7 * 2);
       if (btcHeight > btcApproxHeight) {
-        this._logger.warn('rejecting shitty btc block with height=' + btcHeight);
+        this._logger.warn('rejecting shitty btc block with height=' + btcHeight + ' expected(max)=' + btcApproxHeight);
         return false;
       }
       let ethHeight = block.getBlockchainHeaders().getEthList()[0].getHeight();
       let ethCountHeight = Math.floor(Math.abs(Date.now() - Date.parse("31 Oct 2018 15:45:56 GMT+1")) / 36e5);
-      let ethApproxHeight = 6618108 + (ethCountHeight * 252) + 252;
+      let ethApproxHeight = 6618108 + (ethCountHeight * 252) + (252 * 2);
       if (ethHeight > ethApproxHeight) {
-        this._logger.warn('rejecting shitty eth block with height=' + ethHeight);
+        this._logger.warn('rejecting shitty eth block with height=' + ethHeight + ' expected(max)=' + ethApproxHeight);
         return false;
       }
 
