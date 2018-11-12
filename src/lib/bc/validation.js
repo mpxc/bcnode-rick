@@ -80,7 +80,7 @@ function isValidBlock(newBlock, type = 0) {
   }
   let ethHeight = newBlock.getBlockchainHeaders().getEthList()[0].getHeight();
   let ethCountHeight = Math.floor(Math.abs(Date.now() - Date.parse("31 Oct 2018 15:45:56 GMT+1")) / 36e5);
-  let ethApproxHeight = 6618108 + (ethCountHeight * 252) + (252 * 2);
+  let ethApproxHeight = 6618108 + (ethCountHeight * 260) + (260 * 2);
   if (ethHeight > ethApproxHeight) {
     logger.warn('rejecting shitty eth block with height=' + ethHeight + ' expected(max)=' + ethApproxHeight);
     return false;
